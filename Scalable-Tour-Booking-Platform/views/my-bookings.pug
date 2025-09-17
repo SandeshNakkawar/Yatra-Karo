@@ -1,0 +1,56 @@
+extends base
+
+block content
+  main.main
+    section.section-header
+      .heading-box
+        h1.heading-primary
+          span My bookings
+        p.heading-box__text= bookings && bookings.length ? `${bookings.length} booking${bookings.length === 1 ? '' : 's'} found` : 'No bookings yet'
+
+    section.section-tours.myb
+      if bookings && bookings.length
+        .card-container
+          each b in bookings
+            - const bookedOn = new Date(b.createdAt).toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: '2-digit' });
+            .card
+              .card__header
+                img.card__picture(role='presentation', src=`/img/tours/${b.tour.imageCover}`, alt=`${b.tour.name}`)
+                h3.heading-tertirary
+                  span= b.tour.name
+              .card__details
+                ul.myb__details
+                  li.myb__detail
+                    svg.myb__icon
+                      use(xlink:href='/img/icons.svg#icon-calendar')
+                    span
+                      strong Booked on:
+                      |  #{bookedOn}
+                  li.myb__detail
+                    svg.myb__icon
+                      use(xlink:href='/img/icons.svg#icon-clock')
+                    span
+                      strong Duration:
+                      |  #{b.tour.duration} days
+                  li.myb__detail
+                    svg.myb__icon
+                      use(xlink:href='/img/icons.svg#icon-credit-card')
+                    span
+                      strong Price:
+                      |  $#{b.price || b.tour.price}
+                  li.myb__detail
+                    svg.myb__icon
+                      use(xlink:href='/img/icons.svg#icon-check')
+                    span
+                      strong Status:
+                      |  #{b.paid ? 'Paid' : 'Unpaid'}
+              .card__cta
+                a.btn.btn--green(href=`/tour/${b.tour.slug}`) View tour
+                a.btn.btn--white(href='/billing') Billing
+      else
+        .u-center-text.u-margin-top-huge
+          h2.heading-secondary You have no bookings yet
+          p Explore our tours and make your first booking.
+          a.btn.btn--green(href='/') Browse tours
+
+

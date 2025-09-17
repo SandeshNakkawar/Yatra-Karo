@@ -1,0 +1,183 @@
+extends base
+
+block content
+  // Hero Section with Parallax
+  section.hero
+    .hero__background
+      .hero__bg-layer.hero__bg-layer--1
+      .hero__bg-layer.hero__bg-layer--2
+      .hero__bg-layer.hero__bg-layer--3
+    .hero__content
+      .hero__text
+        h1.hero__title
+          span.hero__title-line Discover Amazing
+          span.hero__title-line Adventures
+          span.hero__title-line Worldwide
+        p.hero__subtitle Explore breathtaking destinations with expert guides and create memories that last a lifetime
+        .hero__buttons
+          a.btn.btn--green.btn--animated(href='#tours') Explore Tours
+          a.btn.btn--white.btn--animated(href='/about') Learn More
+      .hero__scroll
+        .hero__scroll-text Scroll to explore
+        .hero__scroll-arrow
+          svg
+            use(xlink:href='/img/icons.svg#icon-arrow-down')
+
+  // Features Section
+  section.features#features
+    .container
+      .features__header
+        h2.features__title Why Choose Natours?
+        p.features__subtitle Experience the world's most incredible adventures with our premium tour services
+      .features__grid
+        .feature-card
+          .feature-card__icon
+            svg
+              use(xlink:href='/img/icons.svg#icon-globe')
+          h3.feature-card__title Expert Guides
+          p.feature-card__description Professional local guides with deep knowledge of destinations and cultures
+        .feature-card
+          .feature-card__icon
+            svg
+              use(xlink:href='/img/icons.svg#icon-shield')
+          h3.feature-card__title Safe & Secure
+          p.feature-card__description Your safety is our priority with comprehensive insurance and 24/7 support
+        .feature-card
+          .feature-card__icon
+            svg
+              use(xlink:href='/img/icons.svg#icon-heart')
+          h3.feature-card__title Small Groups
+          p.feature-card__description Intimate group sizes for personalized experiences and meaningful connections
+        .feature-card
+          .feature-card__icon
+            svg
+              use(xlink:href='/img/icons.svg#icon-star')
+          h3.feature-card__title Premium Quality
+          p.feature-card__description Handpicked accommodations, transportation, and activities for the best experience
+
+  // Statistics Section
+  section.stats
+    .container
+      .stats__grid
+        .stat-item
+          .stat-item__number(data-target='1000') 0
+          .stat-item__label Happy Travelers
+        .stat-item
+          .stat-item__number(data-target='50') 0
+          .stat-item__label Destinations
+        .stat-item
+          .stat-item__number(data-target='15') 0
+          .stat-item__label Years Experience
+        .stat-item
+          .stat-item__number(data-target='98') 0
+          .stat-item__label Satisfaction Rate
+
+  // Tours Section
+  section.tours#tours
+    .container
+      .tours__header
+        h2.tours__title Featured Adventures
+        p.tours__subtitle Discover our most popular tours and start planning your next adventure
+      .tours__grid
+        each tour, index in tours
+          .tour-card(style=`--delay: ${index * 100}ms`)
+            .tour-card__image
+              img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+              .tour-card__overlay
+                .tour-card__badge= tour.difficulty
+                .tour-card__rating
+                  svg
+                    use(xlink:href='/img/icons.svg#icon-star')
+                  span= tour.ratingsAverage
+            .tour-card__content
+              h3.tour-card__title= tour.name
+              p.tour-card__description= tour.summary
+              .tour-card__details
+                .tour-card__detail
+                  svg
+                    use(xlink:href='/img/icons.svg#icon-map-pin')
+                  span= tour.startLocation.description
+                .tour-card__detail
+                  svg
+                    use(xlink:href='/img/icons.svg#icon-calendar')
+                  if tour.startDates && tour.startDates.length
+                    span= new Date(tour.startDates[0]).toLocaleString('en-us', { month: 'long', year: 'numeric' })
+                  else
+                    span Not available
+                .tour-card__detail
+                  svg
+                    use(xlink:href='/img/icons.svg#icon-user')
+                  span= `${tour.maxGroupSize} people`
+              .tour-card__footer
+                .tour-card__price
+                  span.tour-card__price-value= `$${tour.price}`
+                  span.tour-card__price-text per person
+                a.btn.btn--green.btn--small(href=`/tour/${tour.slug}`) View Details
+
+  // Testimonials Section
+  section.testimonials
+    .container
+      .testimonials__header
+        h2.testimonials__title What Our Travelers Say
+        p.testimonials__subtitle Real stories from adventurers who've experienced the world with us
+      .testimonials__carousel
+        .testimonial-slide.active
+          .testimonial
+            .testimonial__content
+              p.testimonial__text "Natours made our dream trip to the Alps absolutely perfect. The guides were knowledgeable, the group was amazing, and every detail was taken care of. We can't wait to book our next adventure!"
+            .testimonial__author
+              .testimonial__avatar
+                .testimonial__avatar-placeholder SJ
+              .testimonial__info
+                h4.testimonial__name Sarah Johnson
+                p.testimonial__location New York, USA
+        .testimonial-slide
+          .testimonial
+            .testimonial__content
+              p.testimonial__text "The cultural immersion and local experiences were incredible. We felt like we truly got to know the places we visited, not just saw them. Highly recommended!"
+            .testimonial__author
+              .testimonial__avatar
+                .testimonial__avatar-placeholder MC
+              .testimonial__info
+                h4.testimonial__name Michael Chen
+                p.testimonial__location London, UK
+        .testimonial-slide
+          .testimonial
+            .testimonial__content
+              p.testimonial__text "From booking to the end of our trip, everything was seamless. The small group size made it feel personal and the destinations were breathtaking. Worth every penny!"
+            .testimonial__author
+              .testimonial__avatar
+                .testimonial__avatar-placeholder ER
+              .testimonial__info
+                h4.testimonial__name Emma Rodriguez
+                p.testimonial__location Barcelona, Spain
+      .testimonials__controls
+        button.testimonials__btn.testimonials__btn--prev
+          svg
+            use(xlink:href='/img/icons.svg#icon-arrow-left')
+        button.testimonials__btn.testimonials__btn--next
+          svg
+            use(xlink:href='/img/icons.svg#icon-arrow-right')
+
+  // CTA Section
+  section.cta
+    .cta__background
+      .cta__bg-overlay
+    .container
+      .cta__content
+        h2.cta__title Ready for Your Next Adventure?
+        p.cta__subtitle Join thousands of travelers who've discovered the world with Natours
+        .cta__buttons
+          a.btn.btn--green.btn--large(href='/signup') Start Your Journey
+          a.btn.btn--white.btn--large(href='/contact') Get in Touch
+
+  // Newsletter Section
+  section.newsletter
+    .container
+      .newsletter__content
+        h2.newsletter__title Stay Updated
+        p.newsletter__subtitle Get the latest travel tips, exclusive offers, and new destinations delivered to your inbox
+        form.newsletter__form
+          .newsletter__input-group
+            input.newsletter__input(type='email', placeholder='Enter your email address', required)
+            button.newsletter__btn(type='submit') Subscribe
